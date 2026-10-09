@@ -1,0 +1,5 @@
+# Milestone 1 direct dependencies only (lower bounds, not pinned; pin later with `pip freeze` if wanted)
+Flask>=3.0
+psycopg[binary]>=3.1
+python-dotenv>=1.0
+pytest>=8.0
