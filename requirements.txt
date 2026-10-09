@@ -1,5 +1,5 @@
-# Milestone 1 direct dependencies only (lower bounds, not pinned; pin later with `pip freeze` if wanted)
+# FinDoc-Pilot — runtime dependencies
+# Lower bounds, not pinned. Pin later with `pip freeze` if you need reproducibility.
 Flask>=3.0
 psycopg[binary]>=3.1
 python-dotenv>=1.0
-pytest>=8.0

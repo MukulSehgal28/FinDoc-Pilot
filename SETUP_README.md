@@ -11,14 +11,12 @@ Edit the status column yourself as you finish each step.
 | Step | Status |
 |---|---|
 | Inspected the GitHub repo (only `.gitignore` and `README.md` existed) | Completed automatically |
-| Drafted the Milestone 1 files (`requirements.txt`, `app/__init__.py`, `tests/test_app.py`, `.env.example`, `docs/DATABASE_DEBUG.md`, this file) | Completed automatically (delivered for review; **not** in your repo yet) |
-| Smoke check of the routes against a stubbed database driver | Completed automatically (stub only; this is not the pytest suite and not a real database) |
-| Add the files to your repository | Requires my action |
-| Create the virtual environment and install dependencies | Requires my action |
-| Create `.env` with my real connection details | Requires my action |
+| Drafted and added the Milestone 1 files (`requirements.txt`, `app/__init__.py`, `tests/test_app.py`, `.env.example`, `README.md`, `docs/DATABASE_DEBUG.md`, this file) | Completed automatically — **all files are now present in this repository** |
+| Create the virtual environment and install dependencies | Requires my action (venv exists; run `pip install -r requirements-dev.txt` if the environment is empty) |
+| Create `.env` with my real connection details | Requires my action (`.env` is git-ignored and is not part of the repo) |
 | Run `python -m pytest` and record the result | Requires my action |
 | Verify real PostgreSQL connectivity | Requires my action |
-| Commit and push | Requires my action (nothing was committed or pushed for you) |
+| Review, commit and push my own changes | Requires my action (the agent never commits or pushes for you) |
 | Schema, tables, migrations, Docker | Not applicable (none in Milestone 1) |
 
 ## 1. Prerequisites
@@ -37,13 +35,14 @@ Both commands above only read state. Service names vary (for example `postgresql
 ```powershell
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 Copy-Item .env.example .env
 code .env        # replace the placeholders; see section 3
 ```
 
+`requirements-dev.txt` includes `requirements.txt` plus the test runner, so one install covers both the app and `pytest`.
 If activation is blocked with "running scripts is disabled", either skip activation and prefix every command
-with `.\.venv\Scripts\python.exe -m` (for example `.\.venv\Scripts\python.exe -m pip install -r requirements.txt`),
+with `.\.venv\Scripts\python.exe -m` (for example `.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt`),
 or allow local scripts for your user once: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`.
 
 Start the app:
@@ -130,8 +129,8 @@ Invoke-RestMethod http://127.0.0.1:5000/health/db
 
 ## 6. Manual-action checklist (in order)
 
-1. [ ] Create the files from this delivery in your repo at the paths shown. Apply the README link (below).
-2. [ ] `py -3 -m venv .venv`, activate it, `pip install -r requirements.txt`.
+1. [x] Confirm the Milestone 1 files are present in the repo (`app/__init__.py`, `tests/test_app.py`, `requirements.txt`, `.env.example`, `README.md`, `docs/DATABASE_DEBUG.md`). They are already committed.
+2. [ ] `py -3 -m venv .venv`, activate it, `pip install -r requirements-dev.txt`.
 3. [ ] Confirm the PostgreSQL service is `Running`.
 4. [ ] In pgAdmin, collect host, port, user and database name (section 3). Create a database only if needed.
 5. [ ] `Copy-Item .env.example .env` and fill in `DATABASE_URL`.
@@ -148,7 +147,7 @@ Invoke-RestMethod http://127.0.0.1:5000/health/db
 | `py` or `python` not recognized | Python is not installed or not on PATH. Reinstall Python and tick "Add to PATH", or use `py -3`. |
 | Activation: "running scripts is disabled" | See the note in section 2. |
 | `ModuleNotFoundError: No module named 'app'` in pytest | Use `python -m pytest` from the repository root. |
-| `ModuleNotFoundError: psycopg` or "no pq wrapper available" | Venv not active, or dependencies not installed: activate and run `pip install -r requirements.txt`. |
+| `ModuleNotFoundError: psycopg` or "no pq wrapper available" | Venv not active, or dependencies not installed: activate and run `pip install -r requirements-dev.txt`. |
 | pip finds no `psycopg-binary` wheel | Your Python is too new or old for a prebuilt wheel. Use Python 3.12 or 3.13. |
 | `/health/db` says `DATABASE_URL is not set` | `.env` is missing, empty, or you launched Flask outside the repo root. |
 | `Connection refused` | Service stopped or wrong port. Check `Get-Service -Name "postgresql*"` and the port in pgAdmin. |

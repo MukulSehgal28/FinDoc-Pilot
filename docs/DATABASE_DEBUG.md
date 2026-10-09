@@ -68,7 +68,7 @@ No application tables exist yet, so there is nothing else to query.
 | `could not translate host name` | Network | Fix the host spelling. |
 | timeout / `connection timeout expired` | Network | Wrong host or blocked port. |
 | `no pg_hba.conf entry` | Server config | Server-side access rule. Edit it only if you understand it, and do so with care. |
-| `ModuleNotFoundError: psycopg` / `no pq wrapper` | Python env | Activate the venv; `pip install -r requirements.txt`. |
+| `ModuleNotFoundError: psycopg` / `no pq wrapper` | Python env | Activate the venv; `pip install -r requirements-dev.txt`. |
 | invalid URL / missing `=` | Config | Check the URL format and that special characters are encoded. |
 
 ## Debugging workflow
